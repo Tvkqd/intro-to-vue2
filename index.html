@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width">
+        <title>Product App</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div class="nav-bar"></div>
+        <div id="app">
+            
+            <div class="product">
+                <div class="product-image">
+                    <img v-bind:src="image">
+                </div>
+
+                <div class="product-info">
+                    <h1>{{ title }}</h1>
+                    <p> {{ description }}</p>
+                    <a :href="link">Link to css margin(using v-bind)</a>
+
+                    <!--if else logic condition-->
+                    <p v-if="inStock1">In Stock 1(using v-if, v-else)</p>
+                    <p v-else>Out of Stock (using v-if, v-else)</p>
+
+                    <p v-if="inventory > 10">In Stock(using v-else-if)</p>
+                    <p v-else-if="inventory <= 10 && inventory > 0">All most sold out(v-else-if)</p>
+                    <p v-else>Sold out(using v-else-if)</p>
+                    <p v-show="inStock1">In Stock(using v-show)</p>
+                    
+                    <!-- Loop through the list-->
+                    <ul>
+                        <li v-for="detail in details">{{ detail }}</li>
+                    </ul>
+                    <p>Access item in a dictionary using v-for :key</p>
+                    <ul>
+                        <li>Using @click</li>
+                        <div v-for="(variant, index) in variants" 
+                        :key="variant.variantId"
+                        class="color-box"
+                        :style="{ backgroundColor: variant.variantColor }"
+                        @click="updateProduct2(index)">
+                        </div>
+
+                        <!--Using computed properties-->
+                        <li>Using computed properties</li>
+                        <p v-if="inStock3">In Stock 3(using computed properties)</p>
+                        <p v-else>Out of Stock 3(using computed properties)</p>
+                        <!--Add data property called onSale to this display is the product on sale-->
+                        <p>{{ sale }}</p>
+                        <div v-for="(variant, index) in variants" 
+                        :key="variant.variantId"
+                        class="color-box"
+                        :style="{ backgroundColor: variant.variantColor }"
+                        @mouseover="updateProduct2(index)">
+                        </div>
+                    </ul>
+                   
+
+                    <p v-if="inStock2">In Stock 2(using class & style binding)</p>
+                    <p v-else :class="{ outOfStock: !inStock2 }">Out of Stock 2(using disabled, text-decoration: line-through)</p>
+                    <button v-on:click="cart1 += 1" 
+                        :disabled="!inStock2"
+                        :class="{ disabledButton: !inStock2 }">Add to Cart(v-on:click)</button>
+                    <div class="cart">
+                        <p>Cart 1({{cart1}})</p>
+                    </div>
+
+                    <br>
+                    <button v-on:click="addToCart">Add to Cart(function)</button>
+                    <button v-on:click="remove">Remove(function)</button>
+                    <div class="cart">
+                        <p>Cart 2({{cart2}})</p>
+                    </div>
+                </div>
+            </div>
+            <!--Using components-->
+            <div class="cart">
+                <p>Cart 3({{cart3.length}})</p>
+            </div>
+            <product :premium="premium" @add-to-cart="updateCart" @remove-from-cart="removeCart"></product>
+            <product></product>
+        </div>  
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="main.js"></script>
+        
+    </body>
+</html>
+
